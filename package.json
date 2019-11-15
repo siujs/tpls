@@ -8,6 +8,8 @@
     "build": "kuai build"
   },
   "devDependencies": {
+		"@commitlint/cli": "8.2.0",
+		"@commitlint/config-conventional": "8.2.0",
     "@types/jest": "24.0.23",
     "@types/node": "12.12.7",
     "@typescript-eslint/eslint-plugin": "2.7.0",
@@ -15,10 +17,30 @@
     "eslint": "6.6.0",
     "eslint-config-prettier": "6.5.0",
     "eslint-plugin-prettier": "3.1.1",
-    "jest": "24.9.0",
+		"husky": "3.0.9",
+		"jest": "24.9.0",
     "lerna": "3.18.4",
+		"lint-staged": "9.4.3",
     "prettier": "1.19.1",
     "ts-jest": "24.1.0",
     "typescript": "3.7.2"
-  }
+  },
+	"lint-staged": {
+		"linters": {
+			"*.{ts,tsx,js,jsx,vue}": [
+				"kuai lint",
+				"git add"
+			]
+		},
+		"ignore": [
+			"*.min.js"
+		]
+	},
+	"husky": {
+		"hooks": {
+			"post-merge": "kuai doctor pkgV",
+			"pre-commit": "lint-staged",
+			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+		}
+	}
 }
