@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-var-requires */
 /**
  *
  * 构建rollup.config.js的配置
@@ -5,9 +7,12 @@
  */
 import fs from "fs";
 import path from "path";
+import nodeResolve from "rollup-plugin-node-resolve";
 import alias from "rollup-plugin-alias";
+import commonjs from "rollup-plugin-commonjs";
 import json from "rollup-plugin-json";
 import ts from "rollup-plugin-typescript2";
+import babel from "./scripts/babel.custom";
 
 if (!process.env.TARGET) {
 	throw new Error(`TARGET package must be specified via --environment flag.`);
@@ -41,37 +46,6 @@ const formatConfigs = {
 	}
 };
 
-const defaultFormats = ["esm", "cjs"];
-const usrsetFormats = process.env.FORMATS ? process.env.FORMATS.split(",") : null;
-const pkgsetFormats = kuaiBuildOptions.formats;
-const targetFormats = usrsetFormats || pkgsetFormats || defaultFormats;
-
-/**
- *
- * 获取别名
- *
- */
-const aliasOptions = { resolve: [".ts"] };
-
-fs.readdirSync(packagesDir)
-	.filter(dir => fs.statSync(path.resolve(packagesDir, dir)).isDirectory())
-	.map(dir => {
-		const pkgData = require(path.resolve(packagesDir, dir, "package.json"));
-
-		return {
-			input: path.resolve(packagesDir, `${dir}/lib/index.ts`),
-			name: pkgData.name
-		};
-	})
-	.forEach(opt => (aliasOptions[opt.name] = input));
-
-const aliasPlugin = alias(aliasOptions);
-
-/**
- *  设置当前构建package中的external
- */
-const external = Object.keys(aliasOptions).concat(Object.keys(pkgJSON.dependencies || {}));
-
 /**
  * 初始化TS加载
  */
@@ -84,9 +58,47 @@ const tsPlugin = ts({
 			declaration: true,
 			declarationMap: true
 		},
-		exclude: ["**/__tests__"]
+		exclude: ["**/__tests__", "packages/global.d.ts"]
 	}
 });
+
+const jsonPlugin = json({
+	namedExports: false
+});
+
+const nodeResolvePlugin = nodeResolve({
+	mainFields: ["module", "jsnext", "main"]
+});
+
+const commonjsPlugin = commonjs({
+	include: /\/node_modules\//
+});
+
+/**
+ *
+ * 获取别名
+ *
+ */
+const aliasOptions = { resolve: [".ts"] };
+
+fs.readdirSync(pkgsDir)
+	.filter(dir => fs.statSync(path.resolve(pkgsDir, dir)).isDirectory())
+	.map(dir => {
+		const pkgData = require(path.resolve(pkgsDir, dir, "package.json"));
+
+		return {
+			input: path.resolve(pkgsDir, `${dir}/lib/index.ts`),
+			name: pkgData.name
+		};
+	})
+	.forEach(opt => (aliasOptions[opt.name] = opt.input));
+
+const aliasPlugin = alias(aliasOptions);
+
+/**
+ *  设置当前构建package中的external
+ */
+const defaultExternal = Object.keys(aliasOptions).concat(Object.keys(pkgJSON.dependencies || {}));
 
 function toCamelCase(input, seperator = "-") {
 	return input ? input.replace(new RegExp(`\\${seperator}(\\w)`, "g"), ($0, $1) => $1.toUpperCase()) : "";
@@ -106,10 +118,33 @@ function createConfig(output, format, plugins = []) {
 		output.name = toCamelCase(pkgName);
 	}
 
+	const rollupPlugins = [
+		jsonPlugin,
+		tsPlugin,
+		nodeResolvePlugin,
+		commonjsPlugin,
+		aliasPlugin,
+		format === "global" &&
+			babel({
+				extensions: [".ts", ".tsx", ".js", ".jsx", ".es6", ".es", ".mjs"],
+				exclude: "node_modules/**",
+				passPerPreset: true, // @see https://babeljs.io/docs/en/options#passperpreset
+				custom: {
+					modern: false,
+					compress: false,
+					targets: undefined,
+					typescript: true
+				}
+			}),
+		...plugins
+	].filter(Boolean);
+
 	return {
 		input: resolve(`lib/index.ts`),
-		external: kuaiBuildOptions.external || external,
-		plugins: [json({ nameExports: false }), tsPlugin, aliasPlugin, ...plugins],
+		external: (format === "esm-browser" || format === "global" ? [] : defaultExternal).concat(
+			kuaiBuildOptions.external || []
+		),
+		plugins: rollupPlugins,
 		output,
 		onwarn: (msg, warn) => {
 			if (!/Circular/.test(msg)) {
@@ -119,22 +154,53 @@ function createConfig(output, format, plugins = []) {
 	};
 }
 
+/**
+ * 针对global和esm-browser浏览器环境的包对应的rollup配置
+ *
+ * @param {*} format
+ * @returns
+ */
 function createMinifiedConfig(format) {
 	const { terser } = require("rollup-plugin-terser");
+	const gzip = require("rollup-plugin-gzip");
 	return createConfig(
 		{
 			file: resolve(`dist/${name}.min.${format === "global" ? "js" : `.mjs`}`),
 			format: formatConfigs[format].format
 		},
+		format,
 		[
 			terser({
-				module: /^esm/.test(format)
-			})
+				// module: /^esm/.test(format)
+				include: [/^.+\.min\.m?js$/],
+				sourcemap: true,
+				compress: {
+					keep_infinity: true,
+					pure_getters: true,
+					// Ideally we'd just get Terser to respect existing Arrow functions...
+					// unsafe_arrows: true,
+					passes: 10
+				},
+				output: {
+					// By default, Terser wraps function arguments in extra parens to trigger eager parsing.
+					// Whether this is a good idea is way too specific to guess, so we optimize for size by default:
+					wrap_func_args: false
+				},
+				warnings: true,
+				mangle: {}
+			}),
+			gzip({ minSize: 10240 })
 		]
 	);
 }
 
-const targetConfigs = process.env.PROD_ONLY ? [] : targetFormats.map(format => createConfig(formatConfigs[format]));
+const defaultFormats = ["esm", "cjs"];
+
+const targetFormats = kuaiBuildOptions.formats || defaultFormats;
+
+const targetConfigs = kuaiBuildOptions.prodOnly
+	? []
+	: targetFormats.map(format => createConfig(formatConfigs[format], format));
 
 if (isProd) {
 	targetFormats
