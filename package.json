@@ -6,10 +6,10 @@
 	],
 	"scripts": {
 		"build": "kuai build",
-		"lint":"prettier --write && eslint --fix"
+		"lint": "prettier --write && eslint --fix",
+		"test": "jest"
 	},
 	"devDependencies": {
-		
 		"@babel/core": "7.7.2",
 		"@babel/plugin-proposal-class-properties": "7.7.0",
 		"@babel/plugin-syntax-jsx": "7.2.0",
