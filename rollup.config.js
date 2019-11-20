@@ -139,11 +139,20 @@ function createConfig(output, format, plugins = []) {
 		...plugins
 	].filter(Boolean);
 
+	const kuaiExternals = Object.keys(kuaiBuildOptions.external || {})
+		.filter(p => ~p.indexOf(format))
+		.map(it => kuaiBuildOptions.external[it])
+		.flatMap(x => x);
+
+	if ((format === "esm-browser" || format === "global") && kuaiBuildOptions.globals) {
+		output.globals = kuaiBuildOptions.globals;
+	}
+
+	output.exports = "named";
+
 	return {
 		input: resolve(`lib/index.ts`),
-		external: (format === "esm-browser" || format === "global" ? [] : defaultExternal).concat(
-			kuaiBuildOptions.external || []
-		),
+		external: (format === "esm-browser" || format === "global" ? [] : defaultExternal).concat(kuaiExternals),
 		plugins: rollupPlugins,
 		output,
 		onwarn: (msg, warn) => {
@@ -162,10 +171,11 @@ function createConfig(output, format, plugins = []) {
  */
 function createMinifiedConfig(format) {
 	const { terser } = require("rollup-plugin-terser");
-	const gzip = require("rollup-plugin-gzip");
+	const gzip = require("rollup-plugin-gzip").default;
+
 	return createConfig(
 		{
-			file: resolve(`dist/${name}.min.${format === "global" ? "js" : `.mjs`}`),
+			file: resolve(`dist/${pkgName}.min.${format === "global" ? "js" : `mjs`}`),
 			format: formatConfigs[format].format
 		},
 		format,
@@ -202,12 +212,10 @@ const targetConfigs = kuaiBuildOptions.prodOnly
 	? []
 	: targetFormats.map(format => createConfig(formatConfigs[format], format));
 
-if (isProd) {
-	targetFormats
-		.filter(format => format === "global" || format === "esm-browser")
-		.forEach(format => {
-			targetConfigs.push(createMinifiedConfig(format));
-		});
-}
+targetFormats
+	.filter(format => format === "global" || format === "esm-browser")
+	.forEach(format => {
+		targetConfigs.push(createMinifiedConfig(format));
+	});
 
 export default targetConfigs;
