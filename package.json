@@ -57,5 +57,9 @@
 			"pre-commit": "lint-staged",
 			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
 		}
+	},
+	"kuai":{
+		"repo":"buns-li/kuai-tpls",
+		"branch":"master"
 	}
 }
