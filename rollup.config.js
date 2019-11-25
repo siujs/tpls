@@ -29,19 +29,19 @@ const kuaiBuildOptions = pkgJSON.kuai ? pkgJSON.kuai.buildOptions || {} : {};
 
 const formatConfigs = {
 	esm: {
-		file: resolve(`dist/index.esm.js`),
+		file: resolve(`dist/${pkgName}.esm.js`),
 		format: "es"
 	},
 	cjs: {
-		file: resolve(`dist/index.cjs.js`),
+		file: resolve(`dist/${pkgName}.cjs.js`),
 		format: "cjs"
 	},
 	global: {
-		file: resolve(`dist/index.js`),
+		file: resolve(`dist/${pkgName}.js`),
 		format: "iife"
 	},
 	"esm-browser": {
-		file: resolve(`dist/index.mjs`),
+		file: resolve(`dist/${pkgName}.mjs`),
 		format: "es"
 	}
 };
@@ -175,7 +175,7 @@ function createMinifiedConfig(format) {
 
 	return createConfig(
 		{
-			file: resolve(`dist/index.min.${format === "global" ? "js" : `mjs`}`),
+			file: resolve(`dist/${pkgName}.min.${format === "global" ? "js" : `mjs`}`),
 			format: formatConfigs[format].format
 		},
 		format,
