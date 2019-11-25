@@ -59,7 +59,7 @@
 		}
 	},
 	"kuai":{
-		"repo":"buns-li/kuai-tpls",
-		"branch":"master"
+		"repo":"buns-lli/kuai-tpls",
+		"branch":"lib@monorepo"
 	}
 }
