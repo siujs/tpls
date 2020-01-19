@@ -1,1 +1,3 @@
-module.exports = require("@siu/cli-config").lint.eslint;
+const config = require("@siu/cli-config").lint.eslint;
+
+module.exports = config;
