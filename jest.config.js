@@ -1,12 +1,1 @@
-module.exports = {
-	globals: {
-		"ts-jest": {
-			tsConfig: "tsconfig.json"
-		}
-	},
-	moduleFileExtensions: ["ts", "js"],
-	transform: {
-		"^.+\\.(ts|tsx)$": "ts-jest"
-	},
-	testMatch: ["**/__tests__/**/*.(test|spec).(ts|js)"]
-};
+module.exports = require("@siu/cli-rollup").test.jest().lib;

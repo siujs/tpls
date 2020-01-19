@@ -5,47 +5,11 @@
 		"packages/*"
 	],
 	"scripts": {
-		"build": "kuai build",
-		"lint": "prettier --write packages/**/lib/**/*.{ts,tsx,js,jsx} && eslint --fix packages/**/lib/**/*.{ts,tsx,js,jsx}",
-		"test": "jest"
-	},
-	"devDependencies": {
-		"@babel/core": "7.7.4",
-		"@babel/plugin-proposal-class-properties": "7.7.4",
-		"@babel/plugin-syntax-jsx": "7.7.4",
-		"@babel/plugin-transform-react-jsx": "7.7.4",
-		"@babel/preset-env": "7.7.4",
-		"@commitlint/cli": "8.2.0",
-		"@commitlint/config-conventional": "8.2.0",
-		"@types/jest": "24.0.23",
-		"@types/node": "12.12.12",
-		"@typescript-eslint/eslint-plugin": "2.8.0",
-		"@typescript-eslint/parser": "2.8.0",
-		"babel-plugin-macros": "2.7.1",
-		"babel-plugin-transform-async-to-promises": "0.8.15",
-		"eslint": "6.7.0",
-		"eslint-config-prettier": "6.7.0",
-		"eslint-plugin-prettier": "3.1.1",
-		"husky": "3.1.0",
-		"jest": "24.9.0",
-		"lerna": "3.19.0",
-		"lint-staged": "9.4.3",
-		"lodash.merge": "4.6.2",
-		"prettier": "1.19.1",
-		"rollup": "1.27.4",
-		"rollup-plugin-babel": "4.3.3",
-		"rollup-plugin-alias": "2.2.0",
-		"rollup-plugin-commonjs": "10.1.0",
-		"rollup-plugin-gzip": "2.2.0",
-		"rollup-plugin-json": "4.0.0",
-		"rollup-plugin-node-resolve": "5.2.0",
-		"rollup-plugin-terser": "5.1.2",
-		"rollup-plugin-typescript2": "0.25.2",
-		"ts-jest": "24.2.0",
-		"typescript": "3.7.2"
+		"build": "siu build",
+		"test": "siu jest"
 	},
 	"lint-staged": {
-		"packages/**/lib/**/*.{ts,tsx,js,jsx}": [
+		"packages/**/lib/**/*.{ts,tsx,js,jsx,vue,css,scss,less,styl}": [
 			"prettier --write",
 			"eslint --fix",
 			"git add"
@@ -53,13 +17,24 @@
 	},
 	"husky": {
 		"hooks": {
-			"post-merge": "kuai doctor pkgV",
+			"post-merge": "siu doctor -t=pkg -a=diff",
 			"pre-commit": "lint-staged",
-			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+			"commit-msg": "siu lint -t=git"
 		}
 	},
-	"kuai":{
-		"repo":"buns-lli/kuai-tpls",
-		"branch":"lib@monorepo"
+	"devDependencies": {
+		"@siu/cli-config": "1.0.0",
+		"@types/jest": "24.9.0",
+		"@types/node": "13.1.8",
+		"@typescript-eslint/eslint-plugin": "2.16.0",
+		"@typescript-eslint/parser": "2.16.0",
+		"eslint": "6.8.0",
+		"husky": "4.0.10",
+		"jest": "24.9.0",
+		"lerna": "3.20.2",
+		"lint-staged": "9.5.0",
+		"prettier": "1.19.1",
+		"ts-jest": "24.3.0",
+		"typescript": "3.7.5"
 	}
 }

@@ -1,15 +1,28 @@
 {
-	"typescript.tsdk": "node_modules/typescript/lib",
-	"[typescript]": {
-		"editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascript]": {
-		"editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-		"editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+	"typescript.tsdk": "node_modules\\typescript\\lib",
+	"postcssSorting.showErrorMessages": true,
+	"css.validate": false,
+	"scss.validate": false,
+	"eslint.packageManager": "yarn",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true,
+		"source.fixAll.stylelint": true
+	},
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter":"esbenp.prettier-vscode",
+	"[scss]": {
+		"editor.defaultFormatter": "mrmlnc.vscode-stylefmt"
+	},
+	"[less]": {
+		"editor.defaultFormatter": "mrmlnc.vscode-stylefmt"
+	},
+	"[css]": {
+		"editor.defaultFormatter": "mrmlnc.vscode-stylefmt"
+	},
+	"[stylus]": {
+		"editor.defaultFormatter": "mrmlnc.vscode-stylefmt"
+	},
+	"[styl]": {
+		"editor.defaultFormatter": "mrmlnc.vscode-stylefmt"
+	}
 }
