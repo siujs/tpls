@@ -6,7 +6,7 @@
 	],
 	"scripts": {
 		"build": "siu build",
-		"test": "siu jest"
+		"test": "jest"
 	},
 	"lint-staged": {
 		"packages/**/lib/**/*.{ts,tsx,js,jsx,vue,css,scss,less,styl}": [
