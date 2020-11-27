@@ -8,21 +8,13 @@
 		"source.fixAll.eslint": true,
 		"source.fixAll.stylelint": true
 	},
-	"editor.formatOnSave": true,
-	"editor.defaultFormatter":"esbenp.prettier-vscode",
-	"[scss]": {
-		"editor.defaultFormatter": "mrmlnc.vscode-stylefmt"
-	},
-	"[less]": {
-		"editor.defaultFormatter": "mrmlnc.vscode-stylefmt"
-	},
-	"[css]": {
-		"editor.defaultFormatter": "mrmlnc.vscode-stylefmt"
-	},
-	"[stylus]": {
-		"editor.defaultFormatter": "mrmlnc.vscode-stylefmt"
-	},
-	"[styl]": {
-		"editor.defaultFormatter": "mrmlnc.vscode-stylefmt"
-	}
+	"importSorter.generalConfiguration.sortOnBeforeSave": true,
+	"importSorter.importStringConfiguration.quoteMark": "double",
+	"importSorter.importStringConfiguration.tabSize": 2,
+	"importSorter.importStringConfiguration.tabType": "tab",
+	"importSorter.sortConfiguration.removeUnusedImports": true,
+	"importSorter.sortConfiguration.removeUnusedDefaultImports": true,
+	"importSorter.sortConfiguration.customOrderingRules.defaultOrderLevel": 20,
+	"importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 120,
+	"importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type": "newLineEachExpressionAfterCountLimit"
 }

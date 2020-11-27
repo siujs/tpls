@@ -7,9 +7,11 @@ module.exports = {
 	],
 	plugins: ["@typescript-eslint", "prettier"],
 	rules: {
+		"@typescript-eslint/ban-ts-comment": 0,
 		"@typescript-eslint/no-var-requires": 0,
 		"@typescript-eslint/no-explicit-any": 0,
 		"@typescript-eslint/no-empty-function": 1,
+		"@typescript-eslint/explicit-module-boundary-types": 0,
 		"prefer-rest-params": 1,
 		"no-var": 1
 	}

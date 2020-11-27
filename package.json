@@ -6,36 +6,39 @@
 	],
 	"scripts": {
 		"build": "siu build",
-		"test": "jest"
-	},
-	"lint-staged": {
-		"packages/**/lib/**/*.{ts,tsx,js,jsx,vue,css,scss,less,styl}": [
-			"prettier --write",
-			"eslint --fix",
-			"git add"
-		]
+		"test": "node --experimental-modules ./scripts/test.mjs"
 	},
 	"husky": {
 		"hooks": {
-			"post-merge": "siu lint --type=diff-deps",
-			"pre-commit": "lint-staged",
-			"commit-msg": "siu lint --type=git-commit-msg"
+			"pre-commit": "siu glint -h=pre-commit",
+			"prepare-commit-msg": "siu glint -h=prepare-commit-msg",
+			"commit-msg": "siu glint -h=commit-msg",
+			"post-commit": "siu glint -h=post-commit",
+			"post-merge": "siu glint -h=post-merge"
 		}
 	},
 	"devDependencies": {
-		"@types/jest": "26.0.0",
-		"@types/node": "14.0.13",
-		"@typescript-eslint/eslint-plugin": "3.3.0",
-		"@typescript-eslint/parser": "3.3.0",
-		"eslint": "7.2.0",
-    "eslint-config-prettier": "6.11.0",
-    "eslint-plugin-prettier": "3.1.4",
-		"husky": "4.2.5",
-		"jest": "26.0.1",
-		"lerna": "3.22.1",
-		"lint-staged": "10.2.11",
-		"prettier": "2.0.5",
-		"ts-jest": "26.1.0",
-		"typescript": "3.9.5"
+		"@babel/core": "7.12.9",
+		"@babel/plugin-proposal-class-properties": "7.12.1",
+		"@babel/plugin-proposal-decorators": "7.12.1",
+		"@babel/plugin-proposal-nullish-coalescing-operator": "7.12.1",
+		"@babel/plugin-proposal-optional-chaining": "7.12.7",
+		"@babel/preset-env": "7.12.7",
+		"@types/jest": "26.0.15",
+		"@types/node": "14.14.10",
+		"@typescript-eslint/eslint-plugin": "4.8.2",
+		"@typescript-eslint/parser": "4.8.2",
+		"better-scroll": "2.0.5",
+		"core-js": "3.8.0",
+		"cross-env": "7.0.2",
+		"eslint": "7.14.0",
+		"eslint-config-prettier": "6.15.0",
+		"eslint-plugin-prettier": "3.1.4",
+		"glob": "7.1.6",
+		"husky": "4.3.0",
+		"jest": "26.6.3",
+		"prettier": "2.2.0",
+		"ts-jest": "26.4.4",
+		"typescript": "4.0.5"
 	}
 }
