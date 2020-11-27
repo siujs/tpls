@@ -3,8 +3,6 @@
 	"description": "__SIU_PKG_NAME__",
 	"version": "1.0.0",
 	"keywords": [
-		"jssdkp",
-		"pkg",
 		"__SIU_PKG_DIRNAME__"
 	],
 	"author": "buns <kuafujs@126.com>",
