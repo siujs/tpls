@@ -2,10 +2,7 @@
 	"extends": "./tsconfig.base.json",
   "compilerOptions": {
 		  "rootDir": ".",
-			"baseUrl": ".",
-      "paths": {
-					"@jsbridge/*": ["./packages/*/"]
-			}
+			"baseUrl": "."
 	},
   "include": [
 		"packages/*/lib",
