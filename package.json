@@ -24,7 +24,7 @@
 	"scripts": {
 		"pretty":"prettier --write \"**/!(*.min.*)\"",
 		"test": "cross-env UT_MDUS=__SIU_PKG_DIRNAME__ jest --config=../../jest.config.js",
-		"build": "siu build __SIU_PKG_DIRNAME__"
+		"build": "siu build __SIU_PKG_DIRNAME__ --format=es,cjs"
 	},
 	"dependencies": {}
 }
