@@ -1,28 +1,28 @@
 {
-	"name":"__SIU_PKG_NAME__",
-	"description": "__SIU_PKG_NAME__",
-	"version": "1.0.0",
-	"keywords": [
-		"__SIU_PKG_DIRNAME__"
-	],
-	"author": "buns <kuafujs@126.com>",
-	"license": "MIT",
-	"unpkg": "dist/__SIU_PKG_DIRNAME__.js",
-	"module": "dist/__SIU_PKG_DIRNAME__.mjs",
-	"main": "dist/__SIU_PKG_DIRNAME__.cjs",
-	"types": "dist/__SIU_PKG_DIRNAME__.d.ts",
-	"typings": "dist/__SIU_PKG_DIRNAME__.d.ts",
-	"files": [
-		"dist"
-	],
-	"directories": {
-		"lib": "lib",
-		"test": "__tests__"
-	},
-	"scripts": {
-		"pretty":"prettier --write \"**/!(*.min.*)\"",
-		"test": "cross-env UT_MDUS=__SIU_PKG_DIRNAME__ jest --config=../../jest.config.js",
-		"build": "siu build __SIU_PKG_DIRNAME__ --format=es,cjs"
-	},
-	"dependencies": {}
+  "name": "__SIU_PKG_NAME__",
+  "description": "__SIU_PKG_NAME__",
+  "version": "1.0.0",
+  "keywords": [
+    "__SIU_PKG_DIRNAME__"
+  ],
+  "author": "buns <kuafujs@126.com>",
+  "license": "MIT",
+  "unpkg": "dist/__SIU_PKG_DIRNAME__.js",
+  "module": "dist/__SIU_PKG_DIRNAME__.mjs",
+  "main": "dist/__SIU_PKG_DIRNAME__.cjs",
+  "types": "dist/__SIU_PKG_DIRNAME__.d.ts",
+  "typings": "dist/__SIU_PKG_DIRNAME__.d.ts",
+  "files": [
+    "dist"
+  ],
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "scripts": {
+    "pretty": "prettier --write \"!(node_modules|dist)/**/*\"",
+    "test": "cross-env UT_MDUS=__SIU_PKG_DIRNAME__ jest --config=../../jest.config.js",
+    "build": "siu build __SIU_PKG_DIRNAME__ --format=es,cjs"
+  },
+  "dependencies": {}
 }

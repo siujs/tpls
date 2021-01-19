@@ -1,11 +1,11 @@
 {
-	"extends": "../../tsconfig.base.json",
-	"compilerOptions": {
-		"composite": true,
-		"rootDir": "lib",
-		"outDir": "dts_dist",
-		"baseUrl": "lib"
-	},
-	"include": ["lib", "lib/shim.d.ts"],
-	"exclude": ["node_modules", "dist"]
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "lib",
+    "outDir": "dts_dist",
+    "baseUrl": "lib"
+  },
+  "include": ["lib", "lib/shim.d.ts"],
+  "exclude": ["node_modules", "dist"]
 }
