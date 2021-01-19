@@ -20,7 +20,7 @@
     "test": "__tests__"
   },
   "scripts": {
-    "pretty": "prettier --write \"!(node_modules|dist)/**/*\"",
+    "pretty": "prettier --config=../../.prettierrc.js --write .",
     "test": "cross-env UT_MDUS=__SIU_PKG_DIRNAME__ jest --config=../../jest.config.js",
     "build": "siu build __SIU_PKG_DIRNAME__ --format=es,cjs"
   },
