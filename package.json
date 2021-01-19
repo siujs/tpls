@@ -25,6 +25,7 @@
 		"@babel/plugin-proposal-optional-chaining": "7.12.7",
 		"@babel/preset-env": "7.12.11",
 		"@siujs/cli": "1.0.0-beta.11",
+		"@siujs/plugin-jssdk": "^0.0.1",
 		"@types/jest": "26.0.20",
 		"@types/node": "14.14.21",
 		"@typescript-eslint/eslint-plugin": "4.14.0",
