@@ -1,12 +1,8 @@
 {
 	"extends": "./tsconfig.base.json",
-  "compilerOptions": {
-		  "rootDir": ".",
-			"baseUrl": "."
+	"compilerOptions": {
+		"rootDir": ".",
+		"baseUrl": "."
 	},
-  "include": [
-		"packages/*/lib",
-		"packages/*/es",
-		"packages/*/__tests__"
-	]
+	"include": ["packages/*/lib", "packages/*/es", "packages/*/__tests__"]
 }

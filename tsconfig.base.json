@@ -8,12 +8,10 @@
 		"noImplicitAny": true,
 		"moduleResolution": "node",
 		"removeComments": true,
-    "declaration": true,
+		"declaration": true,
 		"sourceMap": true,
 		"skipDefaultLibCheck": true,
 		"skipLibCheck": true
 	},
-  "include": [
-		"packages/global.d.ts",
-	]
+	"include": ["packages/global.d.ts"]
 }
