@@ -16,4 +16,6 @@ if (process.argv.length >= 2) {
 					.join(",");
 }
 
-execSync(`cross-env UT_MDU=${specifiedPkgNames} jest --coverage --color=always`);
+execSync("jest --clearCache");
+
+execSync(`cross-env NODE_ENV=SIU_TEST UT_MDU=${specifiedPkgNames} jest --coverage --color=always --silent`);
