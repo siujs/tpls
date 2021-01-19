@@ -10,11 +10,11 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "siu glint -h=pre-commit",
-			"prepare-commit-msg": "siu glint -h=prepare-commit-msg",
-			"commit-msg": "siu glint -h=commit-msg",
-			"post-commit": "siu glint -h=post-commit",
-			"post-merge": "siu glint -h=post-merge"
+			"pre-commit": "siu glint --hook=pre-commit",
+			"prepare-commit-msg": "siu glint --hook=prepare-commit-msg",
+			"commit-msg": "siu glint --hook=commit-msg",
+			"post-commit": "siu glint --hook=post-commit",
+			"post-merge": "siu glint --hook=post-merge"
 		}
 	},
 	"devDependencies": {
