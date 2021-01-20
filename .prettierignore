@@ -4,3 +4,4 @@
 **/*.br
 node_modules
 packages/**/dist/**/*.*
+.*
